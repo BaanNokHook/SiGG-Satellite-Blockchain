@@ -1,0 +1,162 @@
+.test:
+  stage: test
+  script:
+    - make && make install
+    - python -m unittest discover -b
+
+test-py37:
+  extends: .test
+  image: python:3.7
+
+test-py38:
+  extends: .test
+  image: python:3.8
+
+test-py39:
+  extends: .test
+  image: python:3.9
+
+test-py310:
+  extends: .test
+  image: python:3.10
+
+lint:
+  image: python:3.9
+  before_script:
+    - pip3 install flake8 yapf
+  script:
+    - flake8 .
+    - yapf --diff --recursive --verbose .
+
+test-make-install-apt:
+  image: $IMAGE
+  stage: build
+  only:
+    - tags
+    - web
+  before_script:
+    - apt update -y && apt install -y make python3 python3-setuptools python3-pip
+  script:
+    - make && make install
+  parallel:
+    matrix:
+      - IMAGE: ["ubuntu:bionic", "ubuntu:focal", "ubuntu:jammy", "debian:buster", "debian:bullseye"]
+
+test-make-install-fedora:
+  image: $IMAGE
+  stage: build
+  only:
+    - tags
+    - web
+  before_script:
+    - dnf update -y && dnf install -y make python3 python3-setuptools python3-pip
+  script:
+    - make && make install
+  parallel:
+    matrix:
+      - IMAGE: ["fedora:34", "fedora:35"]
+
+test-make-install-centos:
+  image: $IMAGE
+  stage: build
+  only:
+    - tags
+    - web
+  before_script:
+    - find /etc/yum.repos.d/ -type f -exec sed -i 's/mirrorlist=/#mirrorlist=/g' {} +
+    - find /etc/yum.repos.d/ -type f -exec sed -i 's/#baseurl=/baseurl=/g' {} +
+    - find /etc/yum.repos.d/ -type f -exec sed -i 's/mirror.centos.org/vault.centos.org/g' {} +
+    - dnf update -y && dnf install -y epel-release make python3 python3-setuptools python3-pip gcc python3-devel
+  script:
+    - make && make install
+  parallel:
+    matrix:
+      - IMAGE: ["centos:8"]
+
+.test-dependencies:
+  stage: test
+  script:
+    - python3 -m unittest blocksatcli/verify_deps_instal.py
+
+test-deb-dependencies:
+  image: $IMAGE
+  extends: .test-dependencies
+  only:
+    - tags
+    - web
+  before_script:
+    - apt update -y && apt install -y make python3 python3-setuptools python3-pip
+    - make && make install
+  parallel:
+    matrix:
+      - IMAGE: ["ubuntu:bionic", "ubuntu:focal", "ubuntu:jammy", "debian:buster", "debian:bullseye"]
+
+test-fedora-dependencies:
+  image: $IMAGE
+  extends: .test-dependencies
+  only:
+    - tags
+    - web
+  before_script:
+    - dnf update -y && dnf install -y make python3 python3-setuptools python3-pip
+    - make && make install
+  parallel:
+    matrix:
+      - IMAGE: ["fedora:34", "fedora:35"]
+
+pypi-upload:
+  image: python
+  stage: deploy
+  only:
+    refs:
+      - tags
+  script:
+    - pip3 install twine
+    - make pypi
+
+docker-upload:
+  image:
+    name: maniator/dind-buildx
+    entrypoint: [""]
+  stage: deploy
+  tags:
+    - deb-packer
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $DOCKER_UPLOAD
+  before_script:
+    - apk add make python3 py3-setuptools py3-pip
+    - docker buildx create --use
+  script:
+    - echo $DOCKERHUB_PW | docker login -u $DOCKERHUB_USER --password-stdin
+    - make buildx-push
+
+pandoc:
+  image:
+    name: pandoc/latex:2.16
+    entrypoint: [""]
+  only:
+    refs:
+      - master
+      - web
+  before_script:
+    - apk add python3
+    - cd doc && ./pandoc_setup.sh
+  script:
+    - python3 pandoc.py
+  artifacts:
+    paths:
+      - doc/blocksat_manual.pdf
+
+check-markdown-links:
+  image:
+    name: ghcr.io/tcort/markdown-link-check:stable
+    entrypoint: [""]
+  only:
+    changes:
+      - "**/*.md"
+  script:
+    - >
+      echo '{"ignorePatterns": [{"pattern": "^https://help.blockstream.com"}]}' \
+      > config.json
+    - find . -name \*.md | xargs -n1 /src/markdown-link-check -c config.json

@@ -1,0 +1,10 @@
+*~
+build/
+dist/
+api/examples/downloads/
+api/examples/.*
+api/examples/*.pyc
+*.pyc
+*.DS_Store
+*.egg-info
+util/figs/

@@ -1,0 +1,225 @@
+toc:
+  properties:
+    subcollection: satellite
+    service-name: satellite
+    category: compute
+    audience: service
+    href: /docs/satellite
+    path: satellite
+    label: Satellite
+    version: 2
+    console-page: /satellite
+    product-page: https://www.ibm.com/cloud/satellite
+ 
+  entries: 
+  - navgroup: 
+      id: learn
+      topics:
+      - getting-started.md
+      - topicgroup:
+          label: Understanding Satellite use cases
+          topics:
+            - use-case.md
+            - tenancy-model.md
+            - edge-usecase.md
+      - managed-services.md
+      - release-notes.md
+  - navgroup:
+      id: howto
+      topics:
+        - setup-cli.md
+        - infrastructure-plan.md
+        - host-concept.md
+        - about-locations.md
+        - topicgroup:
+            label: Preparing your host infrastructure
+            topics:
+              - host-reqs.md
+              - reqs-host-storage.md
+              - reqs-host-network.md
+              - topicgroup:
+                  label: Host outbound connectivity requirements
+                  topics:
+                    - reqs-host-network-outbound.md
+                    - reqs-host-network-outbound-dal.md
+                    - reqs-host-network-outbound-fra.md
+                    - reqs-host-network-outbound-lon.md
+                    - reqs-host-network-outbound-osa.md
+                    - reqs-host-network-outbound-sao.md
+                    - reqs-host-network-outbound-syd.md
+                    - reqs-host-network-outbound-tok.md
+                    - reqs-host-network-outbound-tor.md
+                    - reqs-host-network-outbound-wdc.md
+              - host-latency-test.md
+              - host-network-check.md
+        - topicgroup:
+            label: Creating locations
+            topics:
+              - locations.md
+              - alibaba.md
+              - aws.md
+              - gcp.md
+              - azure.md
+              - ibm.md
+              - location-sizing.md
+        - topicgroup:
+            label: Managing hosts and locations
+            topics:
+              - attach-hosts.md
+              - assigning-hosts.md
+              - host-update-location.md
+              - host-update-workers.md
+              - location-copy.md
+              - config-http-proxy.md
+              - config-custom-ntp.md
+              - host-remove.md
+        - topicgroup:
+            label: Deploying Kubernetes resources across clusters with Satellite Config
+            topics:
+              - cluster-config.md
+              - setup-clusters-satconfig.md
+              - satcon-create.md
+              - satcon-manage.md
+              - satcon-existing.md
+              - sat_toolchain_tutorial.md
+        - topicgroup:
+            label: Connecting Satellite locations with external services by using Link endpoints
+            topics:
+              - link-location-cloud.md
+              - default-link-endpoints.md
+              - link-cloud-create.md
+              - link-cloud-monitor.md
+        - topicgroup:
+            label: Logging and monitoring
+            topics:
+              - health.md
+              - monitor.md
+              - at-events.md
+        - topicgroup:
+            label: Setting up storage
+            topics: 
+              - sat-storage-template-ov.md
+              - topicgroup:
+                  label: AWS storage templates
+                  topics:
+                    - config-storage-ebs.md
+                    - config-storage-efs.md
+              - topicgroup:
+                  label: Azure storage templates
+                  topics:
+                    - config-storage-azure-csi.md
+                    - config-storage-azurefile-csi.md
+              - topicgroup:
+                  label: Google storage templates
+                  topics:
+                  - config-storage-gcp-csi.md
+              - topicgroup:
+                  label: IBM storage templates
+                  topics:
+                    - config-storage-block-csi.md 
+                    - config-storage-spectrum-scale.md
+                    - config-storage-vpc-csi.md
+              - topicgroup:
+                  label: NetApp storage templates
+                  topics:
+                    - config-storage-netapp-trident.md
+                    - config-storage-netapp-nas-2104.md
+                    - config-storage-netapp-nas.md
+                    - config-storage-netapp-2104.md
+                    - config-storage-netapp.md
+              - topicgroup:
+                  label: Red Hat storage templates
+                  topics:
+                    - config-storage-local-block.md
+                    - config-storage-local-file.md
+                    - config-storage-odf-local.md
+                    - config-storage-odf-remote.md
+              - topicgroup: 
+                  label: VMware storage templates
+                  topics:
+                    - config-storage-vmware-csi.md 
+              - sat-storage-cos.md
+              - storage-class-ref.md
+        - sg-usecase.md
+        - topicgroup:
+            label: Enhancing security
+            topics:
+              - iam.md
+              - service-architecture.md
+              - compliance.md
+              - service-connection.md
+              - data-security.md
+  - navgroup:
+      id: reference
+      topics: 
+        - link:
+                label: API reference
+                href: https://containers.cloud.ibm.com/global/swagger-global-api/#/satellite-cluster
+        - topicgroup:
+            label: CLI plug-in reference
+            topics:
+              - icsat-map.md
+              - satellite-cli-reference.md
+              - satellite-cli-changelog.md
+        - topicgroup:
+            label: IBM Cloud Satellite Infrastructure Service
+            topics:
+              - infrastructure-service.md
+              - satis-infra-about.md
+              - satis-responsibilities.md
+        - requirements.md
+        - sat-regions.md
+        - responsibilities.md
+        - ha.md
+        - sat-notices.md
+  - navgroup:
+      id: help
+      topics:
+        - faqs.md
+        - topicgroup:
+            label: Troubleshooting errors
+            topics:
+              - get-help.md
+              - ts-locations-debug.md
+              - topicgroup:
+                  label: Locations
+                  topics:
+                    - ts-locations-control-plane.md
+                    - ts-location-subdomain.md
+                    - ts-dl-r0043.md
+                    - ts-location-healthcheck.md
+                    - ts-location-missing-location.md
+              - topicgroup:
+                  label: Hosts
+                  topics:
+                    - ts-hosts-debug.md
+                    - ts-hosts-login.md
+                    - ts-hosts-login-rhcos.md
+                    - ssh-login-denied.md
+                    - host-not-attaching.md
+                    - host-registration-script-fails.md
+                    - assign-fails.md
+                    - host-assign-file-system.md
+                    - sat-host-reattach-fail.md
+                    - ts-hosts-update-roks-console.md
+                    - ts-http-proxy.md
+                    - ts-host-unassigned-unknown.md
+              - topicgroup:
+                  label: Clusters
+                  topics:
+                    - ts-clusters-debug.md
+                    - satconfig-cluster-access-error.md
+                    - ts-console-fail.md
+                    - ts-cluster-operations-blocked.md
+                    - addon-errors.md
+                    - ts-degraded-ingress.md
+                    - ts-sat-ocp-console.md
+                    - ts-cluster-ocdebug.md
+              - topicgroup:
+                  label: Storage
+                  topics:
+                    - debug-storage.md
+                    - storage-namespace-terminating.md
+                    - ts-authentication-failure.md
+                    - ts-node-register-failure.md
+        - sitemap.md
