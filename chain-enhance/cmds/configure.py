@@ -4,7 +4,7 @@ from typing import Optional
 
 import click
 
-from chian.util.config import lock_and_load_config, save_config, str2bool
+from chain.util.config import lock_and_load_config, save_config, str2bool
 def configure(  
     root_path: Path,  
     set_Spacecraft_peer: str,   

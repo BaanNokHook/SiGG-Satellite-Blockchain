@@ -1,8 +1,8 @@
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from chian.util.config import load_config
-from chian.util.path import path_from_root
+from chain.util.config import load_config
+from chain.util.path import path_from_root
 
 
 def db_backup_func(  

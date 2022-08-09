@@ -2,12 +2,12 @@ from pathlib import Path
 from sqlite3 import OperationalError
 from typing import Any, Dict, Optional
 
-from chian.consensus.block_record import BlockRecord
-from chian.consensus.default_constants import DEFAULT_CONSTANTS
-from chian.types.blockchain_format.sized_bytes import bytes32
-from chian.types.full_block import FullBlock
-from chian.util.config import load_config
-from chian.util.path import path_from_root
+from chain.consensus.block_record import BlockRecord
+from chain.consensus.default_constants import DEFAULT_CONSTANTS
+from chain.types.blockchain_format.sized_bytes import bytes32
+from chain.types.full_block import FullBlock
+from chain.util.config import load_config
+from chain.util.path import path_from_root
 
 def  db_validate_func(  
     root_path: Path,  
