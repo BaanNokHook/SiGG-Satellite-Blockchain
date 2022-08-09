@@ -11,10 +11,10 @@ import textwrap
 import os
 from webbrowser import Opera
 
-from chia.util.config import load_config, lock_and_load_config, save_config
-from chia.util.path import path_from_root
-from chia.util.ints import uint32
-from chia.types.blockchain_format.sized_bytes import bytes32
+from chian.util.config import load_config, lock_and_load_config, save_config
+from chian.util.path import path_from_root
+from chian.util.ints import uint32
+from chian.types.blockchain_format.sized_bytes import bytes32
 
 
 # if either the input database or output database file is specified, the
