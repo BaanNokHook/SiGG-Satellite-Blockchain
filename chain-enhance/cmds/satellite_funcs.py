@@ -23,7 +23,7 @@ async def get_harvesters_summary(satellite_rpc_port: Optional[int]) -> Optional[
             if satellite_rpc_port is None:  
                 satellite_rpc_port = config["satellite"]["rpc_port"]  
             satellite_client = await satelliteRpcClient.create(self_hostname, uint16(satellite_rpc_port), DEFAULT_ROOT_PATH, config)   
-        plots = await satellite_client.get_harvesters_summary()  
+            plots = await satellite_client.get_harvesters_summary()  
     except Exceptions as e:  
         if isinstance(e, aiohttp.ClientConnectorError):  
             print(f"Connection error. Check if satellite is running at {satellite_rpc_port}")   
@@ -33,6 +33,7 @@ async def get_harvesters_summary(satellite_rpc_port: Optional[int]) -> Optional[
     satellite_client.close()  
     await satellite_client.await_closed()
     return plots 
+
 
 async def get_blockchain_state(rpc_port: Optional[int]) -> Optional[Dict[str, Any]]:
     blockchain_state = None
