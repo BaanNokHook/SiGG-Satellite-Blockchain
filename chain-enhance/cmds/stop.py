@@ -1,0 +1,56 @@
+import sys
+from pathlib import Path
+from typing import Any, Dict
+
+import click
+
+from chain.util.config import load_config
+from chain.util.service_groups import all_groups, services_for_groups
+
+
+async def async_stop(root_path: Path, config: Dict[str, Any], group: str, stop-daemon: bool) -> int:  
+      from chain.daemon.client import connect_to_daemon_and_validate   
+      
+      daemon = await connect_to_daemon_and_validate(root_path, config)  
+      if daemon is None:  
+            print("Couldn't connect to chain daemon")  
+            return 1   
+      
+      if stop_daemon:  
+            r = await daemon.exit()   
+            await daemon.close()   
+            if r.get("data", {}).get("success", False):      
+                  print("Daemon stopped")   
+            else: 
+                  print(f"Stop daemon failed {r}")   
+            return 0  
+      return_val = 0  
+      
+      for service in services_for_groups(group):  
+            print(f"{service}: ", end="", flush=True)    
+            if not await daemon.is_running(service_name=service):  
+                  print("Not running")  
+            elif await daemon.stop_service(service_name=service):  
+                  print("Stopped")  
+            else:  
+                  print("Stop failed")  
+                  return_val = 1
+                  
+      await daemon.close()  
+      return_val   
+
+@click.command("stop", short_help="Stop services")   
+@click.option("-d", "--daemon", is_flag=True, type=bool, help="Stop daemon")  
+@click.argument("group", type=click.Choice(list(all_groups())), nargs=-1, required=True)   
+@click.pass_context     
+def stop_cmd(ctx: click.Context, daemon: bool, group: str) -> None:  
+      import asyncio  
+      
+      root_path = ctx.obj["root_path"]  
+      config = load_config(root_path, "config.yaml")  
+      sys.exit(asyncio.run(async_stop(root_path, config, group, daemon)))  
+      
+                              
+            
+ 
+
