@@ -32,7 +32,7 @@ def get_transaction_cmd(wallet_rpc_port: Optional[int], fingerprint: int, id: in
       from .wallet_funcs import execute_with_wallet, get_transaction   
       
       asyncio.run(execute_with_wallet(wallet_rpc_port, fingerprint, extra_params, get_transaction))  
-      
+      ss
 @wallet_cmd.command("get_transactions", short_help="Get all transactions")  
 @click.option( 
     "-wp",  
