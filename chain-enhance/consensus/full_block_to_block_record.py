@@ -30,7 +30,7 @@ def block_to_block_record(
             assert header_block is not None 
             block: Union[HeaderBlock, FullBlock] = header_block  
       else: 
-            block = full_block  
+            block = full_block     
       prev_b = blocks.try_block_record(block.prev_header_hash)  
       if block.height > 0:  
             assert prev_b is not None  
