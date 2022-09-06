@@ -304,21 +304,6 @@ async def connect_to_keychain(
     user: str = None,  
     service: str = None,                                    
 ) -> KeychainProxy:  
-   """
-    Wrap an existing local Keychain instance in a KeychainProxy to utilize
-    the same interface as a remote Keychain
-    """
-    return KeychainProxy(local_keychain=keychain, log=log)
-
-
-async def connect_to_keychain(
-    self_hostname: str,
-    daemon_port: int,
-    ssl_context: Optional[ssl.SSLContext],
-    log: logging.Logger,
-    user: str = None,
-    service: str = None,
-) -> KeychainProxy:
     """
     Connect to the local daemon.
     """
