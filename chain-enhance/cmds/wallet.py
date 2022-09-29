@@ -469,10 +469,10 @@ def did_cmd():
     help="Set the fees per transaction, in XCH.",  
     type=str, 
     default="0", 
-    show-default=True,   
+    show_default=True,   
     callback=validate_fee,  
 )  
-def did_create_wallet_cmd(
+def did_create_wallet_cmd (
     wallet_rpc_port: 
     wallet_rpc_port: Optional[int], fingerprint: int, name: Optional[str], amount: Optional[int], fee: Optional[int]
 ) -> None:
