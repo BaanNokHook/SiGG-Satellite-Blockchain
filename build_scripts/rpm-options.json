@@ -1,0 +1,10 @@
+{
+  "dest": "final_installer/",
+  "bin": "chain-blockchain",
+  "name": "chain-blockchain",
+  "license": "../LICENSE",
+  "scripts": {
+    "post": "assets/rpm/postinst.sh",
+    "preun": "assets/rpm/prerm.sh"
+  }
+}
